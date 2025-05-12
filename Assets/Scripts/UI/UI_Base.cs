@@ -54,13 +54,17 @@ public abstract class UI_Base : MonoBehaviour
 
     public static void BindEvent(GameObject obj, Action<PointerEventData> action, Define.UIEvent eventType = Define.UIEvent.Click)
     {
-        UI_EventHandler eventHandler = Util.GetOrAddComponent<UI_EventHandler>(obj);
+        UI_EventHandler eventHandler = obj.GetOrAddComponent<UI_EventHandler>();
         
         switch(eventType)
         {
             case Define.UIEvent.Click:
                 eventHandler.OnClickHandler -= action;
                 eventHandler.OnClickHandler += action;
+                break;
+            case Define.UIEvent.PointerEnter:
+                eventHandler.OnPointerEnterHandler -= action;
+                eventHandler.OnPointerEnterHandler += action;
                 break;
         }
     }
