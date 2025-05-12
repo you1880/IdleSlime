@@ -7,8 +7,14 @@ public class Managers : MonoBehaviour
     static Managers _instance;
     public static Managers Instance { get { Init(); return _instance; } }
 
+    DataManager _data = new DataManager();
+    ResourceManager _resource = new ResourceManager();
+    SceneManagerEX _scene = new SceneManagerEX();
     UIManager _ui = new UIManager();
 
+    public static DataManager Data { get { return Instance._data; } }
+    public static ResourceManager Resource { get { return Instance._resource; } }
+    public static SceneManagerEX Scene { get { return Instance._scene; } } 
     public static UIManager UI { get { return Instance._ui; } }
 
     private static void Init()
@@ -26,7 +32,24 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(manager);
 
             _instance = manager.GetComponent<Managers>();
+
+            _instance._data.Init();
         }
+    }
+
+    public static Coroutine RunCoroutine(IEnumerator coroutine)
+    {
+        return Instance.StartCoroutine(coroutine);
+    }
+
+    public static void TerminateCoroutine(Coroutine coroutine)
+    {
+        if(coroutine == null)
+        {
+            return;
+        }
+
+        Instance.StopCoroutine(coroutine);
     }
 
     void Start()
