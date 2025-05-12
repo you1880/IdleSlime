@@ -15,4 +15,10 @@ public class Define
         PointerEnter,
         PointerExit,
     }
+
+    public enum SceneType
+    {
+        Lobby,
+        Main
+    }
 }
