@@ -18,7 +18,15 @@ public class Define
 
     public enum SceneType
     {
+        Unknown,
         Lobby,
         Main
+    }
+
+    public enum SoundType
+    {
+        Bgm,
+        Effect,
+        Count, // Count용
     }
 }
