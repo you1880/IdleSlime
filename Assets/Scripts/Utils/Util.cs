@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,5 +75,10 @@ public class Util
         }
         
         return Color.white;
+    }
+
+    public static String GetCurrentDataTime()
+    {
+        return DateTime.Now.ToString("yyyy-MM-dd HH:mm");
     }
 }
