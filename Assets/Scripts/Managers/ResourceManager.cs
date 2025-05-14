@@ -20,6 +20,13 @@ public class ResourceManager
         return Resources.Load<T>(path);
     }    
 
+    public Sprite LoadSlimeSprite(int slimeType)
+    {
+        string path = $"Arts/Slime/Slime{slimeType}";
+
+        return Resources.Load<Sprite>(path);
+    }
+
     public GameObject Instantiate(string path, Transform parent = null)
     {
         GameObject original = Load<GameObject>($"Prefabs/{path}");
