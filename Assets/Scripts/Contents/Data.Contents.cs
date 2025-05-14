@@ -11,6 +11,8 @@ namespace Data.Save
         public int saveNumber;
         public string saveTime;
         public int money;
+        public int totalEarnings;
+        public int totalExpenses;
         public List<OwnedSlime> ownedSlimes;
 
         public SaveData(int num, string time, int m, List<OwnedSlime> slimes)
@@ -18,6 +20,8 @@ namespace Data.Save
             saveNumber = num;
             saveTime = time;
             money = m;
+            totalEarnings = m;
+            totalExpenses = 0;
             ownedSlimes = slimes;
         }
     }
@@ -39,8 +43,10 @@ namespace Data.Slime
     }
 
     [System.Serializable]
-    public class Slime
+    public class SlimeData
     {
-        int slimeType;
+        public int slimeType;
+        public int idleMoney;
+        public int clickMoney;
     }
 }
