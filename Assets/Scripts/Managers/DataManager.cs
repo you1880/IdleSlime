@@ -8,6 +8,11 @@ using System;
 
 public class DataManager
 {
+    /*
+        인게임 내 이루어지는 모든 데이터 변경은 CurrentSaveData를 조작할 것.
+        Save시 CurrentSaveData를 저장.
+        Load시 saveDatas[index]에 있는 데이터를 CurrentSaveData로 변경 후 인게임 UI를 이에 맞게 변경
+    */
     public SaveData CurrentSaveData;
     public Action<int> OnSaveFileChanged;
     private const int MAX_SAVE_SLOTS = 5;
@@ -52,8 +57,6 @@ public class DataManager
         {
             CurrentSaveData = saveDatas[saveNum];
         }
-
-        Debug.Log($"현재 데이터 : {CurrentSaveData.saveNumber}");
     }
 
     public void SaveDataToJson(int saveNum, SaveData data = null)
@@ -67,6 +70,7 @@ public class DataManager
                 return;
             }
 
+            saveData.saveTime = Util.GetCurrentDataTime();
             string json = JsonConvert.SerializeObject(saveData, Formatting.Indented, _settings);
             string path = GetSavePath(saveNum);
 
