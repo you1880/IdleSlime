@@ -50,7 +50,13 @@ public abstract class UI_Base : MonoBehaviour
     protected GameObject GetObject(int idx) { return Get<GameObject>(idx); }
     protected TextMeshProUGUI GetText(int idx) { return Get<TextMeshProUGUI>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
-    protected Button GetButton(int idx) { return Get<Button>(idx); }
+    protected Button GetButton(int idx) 
+    { 
+        Button btn = Get<Button>(idx);
+        btn.gameObject.BindEvent(PlayButtonSound);
+
+        return btn;
+    }
 
     public static void BindEvent(GameObject obj, Action<PointerEventData> action, Define.UIEvent eventType = Define.UIEvent.Click)
     {
@@ -67,6 +73,11 @@ public abstract class UI_Base : MonoBehaviour
                 eventHandler.OnPointerEnterHandler += action;
                 break;
         }
+    }
+
+    private void PlayButtonSound(PointerEventData data)
+    {
+        Managers.Sound.PlayButtonSound();
     }
 
     public abstract void Init();
