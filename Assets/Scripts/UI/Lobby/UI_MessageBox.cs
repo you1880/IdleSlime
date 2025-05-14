@@ -20,13 +20,15 @@ public class UI_MessageBox : UI_Base
     }
 
     private TextMeshProUGUI _msgBoxText;
-    private string _text;
     private Action _callback;
+    private string _text;
+    private bool _isConfirmMode;
 
-    public void SetMessageBox(string text, Action onCompleted)
+    public void SetMessageBox(string text, Action onCompleted = null, bool isConfirmMode = false)
     {
         _text = text;
         _callback = onCompleted;
+        _isConfirmMode = isConfirmMode;
     }
 
     private void OnOkButtonClicked(PointerEventData data)
@@ -49,7 +51,15 @@ public class UI_MessageBox : UI_Base
     private void BindButtonEvent()
     {
         GetButton((int)Buttons.OkButton).gameObject.BindEvent(OnOkButtonClicked);
-        GetButton((int)Buttons.NoButton).gameObject.BindEvent(OnNoButtonClicked);
+        Button noButton = GetButton((int)Buttons.NoButton);
+        if(!_isConfirmMode)
+        {
+            noButton.gameObject.BindEvent(OnNoButtonClicked);
+        }
+        else
+        {
+            noButton.gameObject.SetActive(false);
+        }
     }
 
     private void GetUIElements()
