@@ -34,18 +34,12 @@ public class UI_Lobby : UI_Base
 
     private void OnStartButtonClicked(PointerEventData data)
     {
-        //TODO
-        //New Start
-        Debug.Log("Save Button");
         UI_SaveLoad ui = Managers.UI.ShowUI<UI_SaveLoad>("UI_SaveLoad");
         ui.SetCurrentMode(0);
     }
 
     private void OnLoadButtonClicked(PointerEventData data)
     {
-        //TODO
-        //Save File Load
-        Debug.Log("Load Button");
         UI_SaveLoad ui = Managers.UI.ShowUI<UI_SaveLoad>("UI_SaveLoad");
         ui.SetCurrentMode(1);
     }
