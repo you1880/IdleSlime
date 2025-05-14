@@ -24,12 +24,11 @@ public class SceneManagerEX
 
     private void CreateBlockerUI()
     {
-        if(_blocker != null)
+        if(Managers.UI.Root.transform.Find("UI_Blocker") == null)
         {
-            return;
+            _blockerUI = Managers.UI.ShowUI<UI_Blocker>();
         }
 
-        _blockerUI = Managers.UI.ShowUI<UI_Blocker>();
         _blocker = _blockerUI.gameObject;
         _blockImage = _blocker.GetComponent<Image>();
     }
@@ -40,7 +39,8 @@ public class SceneManagerEX
         operation.allowSceneActivation = false;
 
         float startTime = Time.time;
-        FadeOut();
+
+        yield return Managers.RunCoroutine(Fade(ALPHA_TRANSPARENT, ALPHA_OPAQUE));
         SetBlockText("로딩중...");
 
         while(operation.progress < 0.9f)
@@ -60,16 +60,14 @@ public class SceneManagerEX
 
         //yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
         operation.allowSceneActivation = true;
+        yield return null;
 
-        FadeIn();
+        yield return Managers.RunCoroutine(FadeIn());
     }
 
     public IEnumerator Fade(float start, float end)
     {
-        if(_blocker == null)
-        {
-            CreateBlockerUI();
-        }
+        CreateBlockerUI();
         
         float elapsed = 0.0f;
 
@@ -78,11 +76,6 @@ public class SceneManagerEX
 
         while(elapsed < FADE_DELAY_TIME)
         {
-            if(_blockImage == null)
-            {
-                yield break;
-            }
-
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / FADE_DELAY_TIME);
             float alpha = Mathf.Lerp(start, end, t);
@@ -91,6 +84,15 @@ public class SceneManagerEX
 
             yield return null;
         }
+        
+        yield return null;
+    }
+
+    public IEnumerator FadeIn()
+    {
+        yield return Managers.RunCoroutine(Fade(ALPHA_OPAQUE, ALPHA_TRANSPARENT));
+
+        Clear();
     }
 
     private void SetBlockText(string text)
@@ -115,12 +117,6 @@ public class SceneManagerEX
     private void FadeOut()
     {
         Managers.RunCoroutine(Fade(ALPHA_TRANSPARENT, ALPHA_OPAQUE));
-    }
-
-    private void FadeIn()
-    {
-        Managers.RunCoroutine(Fade(ALPHA_OPAQUE, ALPHA_TRANSPARENT));
-        Clear();
     }
 
     private string GetSceneName(Define.SceneType type)
