@@ -10,11 +10,13 @@ public class Managers : MonoBehaviour
     DataManager _data = new DataManager();
     ResourceManager _resource = new ResourceManager();
     SceneManagerEX _scene = new SceneManagerEX();
+    SoundManager _sound = new SoundManager();
     UIManager _ui = new UIManager();
 
     public static DataManager Data { get { return Instance._data; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } } 
+    public static SoundManager Sound { get { return Instance._sound; } }
     public static UIManager UI { get { return Instance._ui; } }
 
     private static void Init()
@@ -34,6 +36,7 @@ public class Managers : MonoBehaviour
             _instance = manager.GetComponent<Managers>();
 
             _instance._data.Init();
+            _instance._sound.Init();
         }
     }
 
