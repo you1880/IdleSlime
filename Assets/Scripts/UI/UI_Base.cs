@@ -72,6 +72,10 @@ public abstract class UI_Base : MonoBehaviour
                 eventHandler.OnPointerEnterHandler -= action;
                 eventHandler.OnPointerEnterHandler += action;
                 break;
+            case Define.UIEvent.PointerExit:
+                eventHandler.OnPointerExitHandler -= action;
+                eventHandler.OnPointerExitHandler += action;
+                break;
         }
     }
 
