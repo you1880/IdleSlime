@@ -29,4 +29,11 @@ public class Define
         Effect,
         Count, // Count용
     }
+
+    public enum SlimeState
+    {
+        Idle,
+        Move,
+        Touch
+    }
 }
