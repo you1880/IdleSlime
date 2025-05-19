@@ -1,0 +1,143 @@
+{
+    "slimeDatas" : [
+        {
+            "slimeType" : 0,
+            "idleMoney" : 0,
+            "clickMoney" : 0
+        },
+        {
+            "slimeType" : 1,
+            "idleMoney" : 1,
+            "clickMoney" : 2
+        },
+        {
+            "slimeType" : 2,
+            "idleMoney" : 3,
+            "clickMoney" : 5
+        },
+        {
+            "slimeType" : 3,
+            "idleMoney" : 10,
+            "clickMoney" : 15
+        },
+        {
+            "slimeType" : 4,
+            "idleMoney" : 20,
+            "clickMoney" : 25
+        },
+        {
+            "slimeType" : 5,
+            "idleMoney" : 50,
+            "clickMoney" : 60
+        },
+        {
+            "slimeType" : 6,
+            "idleMoney" : 100,
+            "clickMoney" : 130
+        },
+        {
+            "slimeType" : 7,
+            "idleMoney" : 200,
+            "clickMoney" : 240
+        },
+        {
+            "slimeType" : 8,
+            "idleMoney" : 400,
+            "clickMoney" : 480
+        },
+        {
+            "slimeType" : 9,
+            "idleMoney" : 700,
+            "clickMoney" : 800
+        },
+        {
+            "slimeType" : 10,
+            "idleMoney" : 1000,
+            "clickMoney" : 1150
+        },
+        {
+            "slimeType" : 11,
+            "idleMoney" : 1500,
+            "clickMoney" : 1800
+        },
+        {
+            "slimeType" : 12,
+            "idleMoney" : 2500,
+            "clickMoney" : 3500
+        }
+    ],
+    "skillDatas" : [
+        {
+            "skillType" : 0,
+            "maxSkillLevel" : 4,
+            "skillName" : "슬라임 슬롯 증가",
+            "skillLore" : "스킬 레벨당 슬롯 수 5 / 10 / 20 / 40 증가",
+            "costPerLevel" : [
+                100,
+                500,
+                3000,
+                10000
+            ],
+            "statPerLevel" : [
+                1.05,
+                1.10,
+                1.20,
+                1.40
+            ]
+        },
+        {
+            "skillType" : 1,
+            "maxSkillLevel" : 4,
+            "skillName" : "클릭 당 얻는 골드 증가",
+            "skillLore" : "스킬 레벨 당 골드 획득량 (5 / 10 / 15 / 30)% 증가",
+            "costPerLevel" : [
+                300,
+                1000,
+                5000,
+                25000
+            ],
+            "statPerLevel" : [
+                1.05,
+                1.10,
+                1.15,
+                1.30
+            ]
+        },
+        {
+            "skillType" : 2,
+            "maxSkillLevel" : 4,
+            "skillName" : "일정 시간마다 얻는 골드 증가",
+            "skillLore" : "스킬 레벨 당 골드 획득량 (3 / 5 / 10 / 20)% 증가",
+            "costPerLevel" : [
+                500,
+                1500,
+                8500,
+                45000
+            ],
+            "statPerLevel" : [
+                1.03,
+                1.05,
+                1.10,
+                1.20
+            ]
+        },
+        {
+            "skillType" : 3,
+            "maxSkillLevel" : 4,
+            "skillName" : "슬라임 강화 성공 확률 증가",
+            "skillLore" : "스킬 레벨 당 성공 확률 n% 증가",
+            "costPerLevel" : [
+                111111,
+                222222,
+                333333,
+                444444
+            ],
+            "statPerLevel" : [
+                1.05,
+                1.10,
+                1.20,
+                1.40
+            ]
+        }
+    ]
+}
