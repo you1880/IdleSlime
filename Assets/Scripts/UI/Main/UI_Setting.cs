@@ -69,8 +69,7 @@ public class UI_Setting : UI_Base
 
     private void OnExitButtonClicked(PointerEventData data)
     {
-        Managers.Resource.Destroy(this.gameObject);
-        Managers.UI.OpenedMenuUI = null;
+        Managers.UI.CloseUI(this.gameObject);
     }
 
     private void OnSaveButtonClicked(PointerEventData data)
