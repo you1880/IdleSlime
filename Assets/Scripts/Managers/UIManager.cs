@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager
 {
+    private UI_Base _openedMenuUI;
+
     public GameObject Root
     {
         get
@@ -42,11 +45,36 @@ public class UIManager
         return ui;
     }
 
+    public T ShowMenuUI<T>(string name = null) where T : UI_Base
+    {
+        if (_openedMenuUI != null)
+        {
+            CloseUI(_openedMenuUI.gameObject);
+        }
+        
+        _openedMenuUI = ShowUI<T>(name);
+
+        return _openedMenuUI as T;
+    }
+
+    public UI_MessageBox ShowMessageBoxUI(string msg, Action onCompleted = null, bool isConfirmMode = false)
+    {
+        UI_MessageBox messageBox = ShowUI<UI_MessageBox>();
+        messageBox.SetMessageBox(msg, onCompleted, isConfirmMode);
+
+        return messageBox;
+    }
+
     public void CloseUI(GameObject ui)
     {
-        if(ui == null)
+        if (ui == null)
         {
             return;
+        }
+
+        if (ui == _openedMenuUI)
+        {
+            _openedMenuUI = null;
         }
 
         Managers.Resource.Destroy(ui);
