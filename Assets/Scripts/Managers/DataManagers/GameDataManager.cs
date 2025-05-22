@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class GameDataManager
 {
+    private const int UNLOCK_SKILL_ID = 0;
     private const int UPGRADE_CLICK_MONEY_ID = 1;
     private Dictionary<int, SlimeData> _slimeDataDict = new Dictionary<int, SlimeData>();
     private Dictionary<int, SkillData> _skillDataDict = new Dictionary<int, SkillData>();
@@ -35,6 +36,11 @@ public class GameDataManager
         return new SkillData(-1, 0);
     }
 
+    public SkillData GetSkillDataWithId(Define.SkillType skillType)
+    {
+        return GetSkillDataWithId((int)skillType);
+    }
+
     public int GetSkillUpgradeCost(int id, int level)
     {
         if (!_skillDataDict.TryGetValue(id, out SkillData data))
@@ -50,9 +56,36 @@ public class GameDataManager
         return data.costPerLevel[level];
     }
 
+    public int GetMaxUnlockedSlimeType()
+    {
+        int currentLevel = Managers.Data.UserDataManager.GetSkillLevel(UNLOCK_SKILL_ID);
+
+        if (_skillDataDict.TryGetValue(UNLOCK_SKILL_ID, out SkillData data))
+        {
+            return (int)data.statPerLevel[currentLevel];
+        }
+
+        return 0;
+    }
+
     public float GetUpgradeClickWeight(int level)
     {
         if (!_skillDataDict.TryGetValue(UPGRADE_CLICK_MONEY_ID, out SkillData data))
+        {
+            return 1.0f;
+        }
+
+        if (level >= 0 && level < data.statPerLevel.Count)
+        {
+            return data.statPerLevel[level];
+        }
+
+        return 1.0f;
+    }
+
+    public float GetLevelPerSkillWeight(Define.SkillType skillType, int level)
+    {
+        if (!_skillDataDict.TryGetValue((int)skillType, out SkillData data))
         {
             return 1.0f;
         }
@@ -97,6 +130,6 @@ public class GameDataManager
 
         LoadGameData();
 
-        Debug.Log(_skillDataDict[0].costPerLevel.Count);
+        Debug.Log(_slimeDataDict[1].slimeEnhanceDatas[1].successRate);
     }
 }

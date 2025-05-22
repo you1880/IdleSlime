@@ -17,6 +17,7 @@ public class UserDataManager
     private const int MAX_SAVE_SLOTS = 5;
     private JsonSerializerSettings _settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
     private List<SaveData> saveDatas = new List<SaveData>();
+    private float _currentSavePlayTime = 0.0f;
     public SaveData CurrentSaveData { get; private set; }
     public Action OnUserDataChanged;
 
@@ -45,12 +46,83 @@ public class UserDataManager
 
     public void IncreaseSkillLevel(int skillId)
     {
-        if (skillId >= 0 && skillId < CurrentSaveData.ownedSkills.Count)
+        if (skillId < 0 || skillId >= (int)Define.SkillType.MaxSkillType)
         {
-            CurrentSaveData.ownedSkills[skillId].skillLevel++;
-
-            OnUserDataChanged?.Invoke();
+            return;
         }
+
+        CurrentSaveData.ownedSkills[skillId].skillLevel++;
+
+        OnUserDataChanged?.Invoke();
+    }
+
+    public int GetSkillLevel(Define.SkillType skillType)
+    {
+        int skillId = (int)skillType;
+
+        if (skillId < 0 || skillId >= (int)Define.SkillType.MaxSkillType)
+        {
+            return 0;
+
+        }
+
+        return CurrentSaveData.ownedSkills[skillId].skillLevel;
+    }
+
+    public void AddSlimeInOwnedSlimes(int slimeType)
+    {
+        bool isFind = false;
+
+        foreach (OwnedSlime ownedSlime in CurrentSaveData.ownedSlimes)
+        {
+            if (ownedSlime.slimeType == slimeType)
+            {
+                isFind = true;
+                ownedSlime.slimeCount++;
+            }
+        }
+
+        if (!isFind)
+        {
+            CurrentSaveData.ownedSlimes.Add(new OwnedSlime(slimeType, 1));
+        }
+
+        Debug.Log("AddSlime");
+        OnUserDataChanged?.Invoke();
+    }
+
+    public void AddOrSubSlimeEnhanceLevel(OwnedSlime ownedSlime, bool isAdd = true)
+    {
+        if (isAdd)
+        {
+            ownedSlime.slimeEnhancementLevel = ownedSlime.slimeEnhancementLevel + 1 == (int)Define.GradeType.GradeSP ?
+                (int)Define.GradeType.GradeSP : ownedSlime.slimeEnhancementLevel + 1;
+        }
+        else
+        {
+            ownedSlime.slimeEnhancementLevel = ownedSlime.slimeEnhancementLevel - 1 < 0 ?
+                0 : ownedSlime.slimeEnhancementLevel - 1;
+        }
+
+        OnUserDataChanged?.Invoke();
+    }
+
+    public void CalCurrentSavePlayTime()
+    {
+        _currentSavePlayTime += Time.deltaTime;
+    }
+
+    public void InitCurrentSavePlayTime()
+    {
+        _currentSavePlayTime = 0.0f;
+    }
+
+    public (int, int) GetTotalPlayTime()
+    {
+        int hours = Mathf.FloorToInt((CurrentSaveData.playTime + _currentSavePlayTime) / 3600.0f);
+        int minutes = Mathf.FloorToInt((CurrentSaveData.playTime + _currentSavePlayTime) % 3600.0f / 60.0f);
+
+        return (hours, minutes);
     }
 
     public string GetSavePath(int saveNum)
@@ -100,6 +172,7 @@ public class UserDataManager
             }
 
             saveData.saveTime = Util.GetCurrentDataTime();
+            saveData.playTime += _currentSavePlayTime;
             string json = JsonConvert.SerializeObject(saveData, Formatting.Indented, _settings);
             string path = GetSavePath(saveNum);
 
