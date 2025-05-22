@@ -50,11 +50,15 @@ public abstract class UI_Base : MonoBehaviour
     protected GameObject GetObject(int idx) { return Get<GameObject>(idx); }
     protected TextMeshProUGUI GetText(int idx) { return Get<TextMeshProUGUI>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
-    protected Button GetButton(int idx) 
+    protected Button GetButton(int idx, bool isButtonSound = true) 
     { 
         Button btn = Get<Button>(idx);
-        btn.gameObject.BindEvent(PlayButtonSound);
 
+        if (isButtonSound)
+        {
+            btn.gameObject.BindEvent(PlayButtonSound);
+        }
+        
         return btn;
     }
 
@@ -81,7 +85,7 @@ public abstract class UI_Base : MonoBehaviour
 
     private void PlayButtonSound(PointerEventData data)
     {
-        Managers.Sound.PlayButtonSound();
+        Managers.Sound.PlayEffectSound(Define.EffectSoundType.Button);
     }
 
     public abstract void Init();
