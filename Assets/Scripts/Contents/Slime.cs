@@ -113,7 +113,7 @@ public class Slime : MonoBehaviour
         if (evt == Define.MouseEvent.LClick)
         {
             SlimeState = Define.SlimeState.Touch;
-            Managers.Sound.PlayTouchSound();
+            Managers.Sound.PlayEffectSound(Define.EffectSoundType.Touch);
         }
     }
 
