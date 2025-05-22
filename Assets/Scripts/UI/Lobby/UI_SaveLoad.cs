@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data.Save;
-using Data.Slime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -83,6 +82,7 @@ public class UI_SaveLoad : UI_Base
     
 
     private const string SAVE_SLOT_PREFIX = "SaveSlot";
+    private UserDataManager userDataManager => Managers.Data.UserDataManager;
     private enum SaveLoadMode { Save, Load }
     private List<SaveLoadSlot> _saveSlots = new List<SaveLoadSlot>();
     private SaveLoadMode _currentMode;
@@ -102,29 +102,27 @@ public class UI_SaveLoad : UI_Base
 
     private int GetSlotNumber(string name)
     {
-        int number = 0;
-
         if(name.StartsWith(SAVE_SLOT_PREFIX))
         {
             string numberStr = name.Substring(SAVE_SLOT_PREFIX.Length);
 
-            if(int.TryParse(numberStr, out number))
+            if(int.TryParse(numberStr, out int number))
             {
                 return number;
             }
         }
 
-        return number;
+        return 0;
     }
 
     private void OnExitButtonClicked(PointerEventData data)
     {
-        Managers.Resource.Destroy(this.gameObject);
+        Managers.UI.CloseUI(this.gameObject);
     }
 
     private void OnSlotClicked(PointerEventData data)
     {
-        Managers.Sound.PlayButtonSound(); // Slot은 GameObject에 OnSlotClicked를 BindEvent해서 PlayButtonSound가 있어야됨
+        Managers.Sound.PlayEffectSound(Define.EffectSoundType.Button); // Slot은 GameObject에 OnSlotClicked를 BindEvent해서 PlayButtonSound가 있어야됨
 
         _clickedSlotNumber = GetSlotNumber(data.pointerClick.name);
         if(_currentMode == SaveLoadMode.Save)
@@ -140,8 +138,7 @@ public class UI_SaveLoad : UI_Base
                 msg = "세이브 파일을 생성하시겠습니까?";
             }
 
-            UI_MessageBox box = Managers.UI.ShowUI<UI_MessageBox>("UI_MessageBox");
-            box.SetMessageBox(msg, CreateSaveFile);
+            Managers.UI.ShowMessageBoxUI(msg, CreateSaveFile);
         }
         else if(_currentMode == SaveLoadMode.Load)
         {
@@ -162,8 +159,16 @@ public class UI_SaveLoad : UI_Base
             new OwnedSlime(1, 1)
         };
 
-        SaveData saveData = new SaveData(_clickedSlotNumber, timeString, 500, ownedSlimes);
-        Managers.Data.SaveDataToJson(_clickedSlotNumber, saveData); 
+        List<OwnedSkill> ownedSkills = new List<OwnedSkill>
+        {
+            new OwnedSkill((int)Define.SkillType.UnlockSlimeType, 0),
+            new OwnedSkill((int)Define.SkillType.UpgradeClickMoney, 0),
+            new OwnedSkill((int)Define.SkillType.UpgradeIdleMoney, 0),
+            new OwnedSkill((int)Define.SkillType.AddEnhancementChance, 0)
+        };
+
+        SaveData saveData = new SaveData(_clickedSlotNumber, timeString, ownedSlimes, ownedSkills);
+        userDataManager.SaveDataToJson(_clickedSlotNumber, saveData); 
 
         _saveSlots[_clickedSlotNumber].SetOccupiedSlot(timeString);
 
@@ -172,26 +177,40 @@ public class UI_SaveLoad : UI_Base
 
     private void StartGame()
     {
-        Managers.Data.SetCurrentSaveData(_clickedSlotNumber);
+        userDataManager.SetCurrentSaveData(_clickedSlotNumber);
         Managers.Scene.LoadNextScene();
     }
 
     private void OnTrashBinButtonClicked(PointerEventData data)
     {
-        Managers.Sound.PlayButtonSound(); // GetButton이 아닌 Util.FindChild로 찾아 BindEvent 하는거라 PlayButtonSound 해줘야함
+        Managers.Sound.PlayEffectSound(Define.EffectSoundType.Button); // GetButton이 아닌 Util.FindChild로 찾아 BindEvent 하는거라 PlayButtonSound 해줘야함
 
         _clickedSlotNumber = GetSlotNumber(data.pointerClick.transform.parent.parent.name);
         string msg = "해당 세이브를 삭제하시겠습니까?";
-        
-        UI_MessageBox box = Managers.UI.ShowUI<UI_MessageBox>("UI_MessageBox");
-        box.SetMessageBox(msg, DeleteSaveFile);
+
+        Managers.UI.ShowMessageBoxUI(msg, DeleteSaveFile);
     }
 
     private void DeleteSaveFile()
     {
-        Managers.Data.DeleteSaveData(_clickedSlotNumber);
+        userDataManager.DeleteSaveData(_clickedSlotNumber);
 
         _saveSlots[_clickedSlotNumber].SetEmptySlot();
+    }
+
+    private void InitSlotElements(int slotNumber, SaveLoadSlot slot)
+    {
+        SaveData data = userDataManager.GetSaveDataWithIndex(slotNumber);
+
+        if(data != null)
+        {
+            slot.SetOccupiedSlot(data.saveTime);
+            slot.trashBinButton.gameObject.BindEvent(OnTrashBinButtonClicked);
+        }
+        else
+        {
+            slot.SetEmptySlot();
+        }
     }
 
     private void BindUIElements()
@@ -211,21 +230,6 @@ public class UI_SaveLoad : UI_Base
             InitSlotElements(slotNumber, saveLoadSlot);
             slotObject.BindEvent(OnSlotClicked);
             _saveSlots.Add(saveLoadSlot);
-        }
-    }
-
-    private void InitSlotElements(int slotNumber, SaveLoadSlot slot)
-    {
-        SaveData data = Managers.Data.GetSaveDataWithIndex(slotNumber);
-
-        if(data != null)
-        {
-            slot.SetOccupiedSlot(data.saveTime);
-            slot.trashBinButton.gameObject.BindEvent(OnTrashBinButtonClicked);
-        }
-        else
-        {
-            slot.SetEmptySlot();
         }
     }
 
