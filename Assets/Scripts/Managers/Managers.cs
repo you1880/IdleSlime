@@ -7,27 +7,42 @@ public class Managers : MonoBehaviour
     static Managers _instance;
     public static Managers Instance { get { Init(); return _instance; } }
 
-    DataManager _data = new DataManager();
-    ResourceManager _resource = new ResourceManager();
-    SceneManagerEX _scene = new SceneManagerEX();
-    SoundManager _sound = new SoundManager();
-    UIManager _ui = new UIManager();
+    private DataManager _data = new DataManager();
+    private GameManager _game = new GameManager();
+    private InputManager _input = new InputManager();
+    private ResourceManager _resource = new ResourceManager();
+    private SceneManagerEX _scene = new SceneManagerEX();
+    private SoundManager _sound = new SoundManager();
+    private UIManager _ui = new UIManager();
 
     public static DataManager Data { get { return Instance._data; } }
+    public static GameManager Game { get { return Instance._game; } }
+    public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
-    public static SceneManagerEX Scene { get { return Instance._scene; } } 
+    public static SceneManagerEX Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static UIManager UI { get { return Instance._ui; } }
+    private static bool _isApplicationQuitting = false;
+    
+    private void OnApplicationQuit()
+    {
+        _isApplicationQuitting = true;
+    }
 
     private static void Init()
     {
-        if(_instance == null)
+        if (_isApplicationQuitting)
         {
-            GameObject manager = GameObject.Find("@GameManager");
+            return;
+        }
+        
+        if (_instance == null)
+        {
+            GameObject manager = GameObject.Find("@Managers");
 
-            if(manager == null)
+            if (manager == null)
             {
-                manager = new GameObject { name = "@GameManager" };
+                manager = new GameObject { name = "@Managers" };
                 manager.AddComponent<Managers>();
             }
 
@@ -47,7 +62,7 @@ public class Managers : MonoBehaviour
 
     public static void TerminateCoroutine(Coroutine coroutine)
     {
-        if(coroutine == null)
+        if (coroutine == null)
         {
             return;
         }
@@ -55,8 +70,18 @@ public class Managers : MonoBehaviour
         Instance.StopCoroutine(coroutine);
     }
 
-    void Start()
+    private void Start()
     {
         Init();
+    }
+
+    private void Update()
+    {
+        _input.OnUpdate();
+
+        if (_scene.CurrentScene is MainScene)
+        {
+            _data.UserDataManager.CalCurrentSavePlayTime();
+        }
     }
 }
