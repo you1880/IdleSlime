@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Data.Slime;
+using Data.Game;
 using UnityEngine;
 
 namespace Data.Save
@@ -13,32 +13,83 @@ namespace Data.Save
         public int money;
         public int totalEarnings;
         public int totalExpenses;
+        public float playTime;
         public List<OwnedSlime> ownedSlimes;
+        public List<OwnedSkill> ownedSkills;
 
-        public SaveData(int num, string time, int m, List<OwnedSlime> slimes)
+        public SaveData(int num, string time, List<OwnedSlime> slimes, List<OwnedSkill> skills)
         {
             saveNumber = num;
             saveTime = time;
-            money = m;
-            totalEarnings = m;
+            money = 0;
+            totalEarnings = 0;
             totalExpenses = 0;
+            playTime = 0.0f;
             ownedSlimes = slimes;
+            ownedSkills = skills;
         }
     }
-}
 
-namespace Data.Slime
-{
     [System.Serializable]
     public class OwnedSlime
     {
         public int slimeType;
         public int slimeCount;
+        public int slimeEnhancementLevel;
 
         public OwnedSlime(int sType, int count)
         {
             slimeType = sType;
             slimeCount = count;
+            slimeEnhancementLevel = 0;
+        }
+    }
+
+    [System.Serializable]
+    public class OwnedSkill
+    {
+        public int skillType;
+        public int skillLevel;
+
+        public OwnedSkill(int type, int level)
+        {
+            skillType = type;
+            skillLevel = level;
+        }
+    }
+}
+
+namespace Data.Game
+{
+    [System.Serializable]
+    public class GameData
+    {
+        public List<SlimeData> slimeDatas;
+        public List<SkillData> skillDatas;
+
+        public GameData()
+        {
+            slimeDatas = new List<SlimeData>();
+            skillDatas = new List<SkillData>();
+        }
+    }
+
+    [System.Serializable]
+    public class SkillData
+    {
+        public int skillType;
+        public int maxSkillLevel;
+        public string skillName;
+        public string skillLore;
+        public List<int> costPerLevel;
+        public List<float> statPerLevel;
+
+        public SkillData(int type, int level)
+        {
+            skillType = type;
+            maxSkillLevel = level;
+            costPerLevel = new List<int>();
+            statPerLevel = new List<float>();
         }
     }
 
@@ -48,5 +99,33 @@ namespace Data.Slime
         public int slimeType;
         public int idleMoney;
         public int clickMoney;
+        public int slimePrice;
+        public List<SlimeEnhanceData> slimeEnhanceDatas;
+
+        public SlimeData(int type, int idle, int click, int price, List<SlimeEnhanceData> enhanceDatas)
+        {
+            slimeType = type;
+            idleMoney = idle;
+            clickMoney = click;
+            slimePrice = price;
+            slimeEnhanceDatas = enhanceDatas;
+        }
+    }
+
+    [System.Serializable]
+    public class SlimeEnhanceData
+    {
+        public float successRate;
+        public float failRate;
+        public int requireSlimeCount;
+        public int requireMoney;
+
+        public SlimeEnhanceData(float sRate, float fRate, int count, int money)
+        {
+            successRate = sRate;
+            failRate = fRate;
+            requireSlimeCount = count;
+            requireMoney = money;
+        }
     }
 }
