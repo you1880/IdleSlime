@@ -72,6 +72,7 @@ public class UI_Upgrade : UI_Base
     private GameObject _skillLorePanel;
     private TextMeshProUGUI _nameText;
     private TextMeshProUGUI _loreText;
+    private int _selectedSkillId;
 
     private void OnBuyButtonClicked(PointerEventData data)
     {
@@ -79,14 +80,17 @@ public class UI_Upgrade : UI_Base
         {
             if (_upgradeSlots[i].upgradeBuyButton.gameObject == data.pointerClick.gameObject)
             {
-                Managers.Game.BuySkillUpgrade(i);
+                _selectedSkillId = i;
+                Managers.Game.BuySkillUpgrade(_selectedSkillId);
+
+                break;
             }
         }
     }
 
     private void OnExitButtonClicked(PointerEventData data)
     {
-        Managers.Resource.Destroy(this.gameObject);
+        Managers.UI.CloseUI(this.gameObject);
     }
 
     private void InitUpgradeSlots()
