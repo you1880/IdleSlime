@@ -34,12 +34,12 @@ public class UI_MessageBox : UI_Base
     private void OnOkButtonClicked(PointerEventData data)
     {
         _callback?.Invoke();
-        Managers.Resource.Destroy(this.gameObject);
+        Managers.UI.CloseUI(this.gameObject);
     }
 
     private void OnNoButtonClicked(PointerEventData data)
     {
-        Managers.Resource.Destroy(this.gameObject);
+        Managers.UI.CloseUI(this.gameObject);
     }
 
     private void BindUIElements()
