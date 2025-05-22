@@ -27,11 +27,18 @@ public class ResourceManager
         return Resources.Load<Sprite>(path);
     }
 
+    public Sprite LoadSlimeGradeSprite(int slimeGrade)
+    {
+        string path = $"Arts/Grade/Grade{slimeGrade}";
+
+        return Resources.Load<Sprite>(path);
+    }
+
     public GameObject Instantiate(string path, Transform parent = null)
     {
         GameObject original = Load<GameObject>($"Prefabs/{path}");
 
-        if(original == null)
+        if (original == null)
         {
             Debug.Log($"Failed to Load Prefab : {path}");
             return null;
