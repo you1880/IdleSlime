@@ -3,86 +3,435 @@
         {
             "slimeType" : 0,
             "idleMoney" : 0,
-            "clickMoney" : 0
+            "clickMoney" : 0,
+            "slimePrice" : 0,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 1,
+                    "failRate" : 0,
+                    "requireSlimeCount" : 0,
+                    "requireMoney" : 0
+                }
+            ]
         },
         {
             "slimeType" : 1,
             "idleMoney" : 1,
-            "clickMoney" : 2
+            "clickMoney" : 2,
+            "slimePrice" : 50,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 1.0,
+                    "failRate" : 0.0,
+                    "requireSlimeCount" : 1,
+                    "requireMoney" : 100
+                },
+                {
+                    "successRate" : 0.9,
+                    "failRate" : 0.1,
+                    "requireSlimeCount" : 3,
+                    "requireMoney" : 200
+                },
+                {
+                    "successRate" : 0.75,
+                    "failRate" : 0.25,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 350
+                },
+                {
+                    "successRate" : 0.6,
+                    "failRate" : 0.4,
+                    "requireSlimeCount" : 10,
+                    "requireMoney" : 500
+                }
+            ]
         },
         {
             "slimeType" : 2,
             "idleMoney" : 3,
-            "clickMoney" : 5
+            "clickMoney" : 5,
+            "slimePrice" : 200,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.95,
+                    "failRate" : 0.05,
+                    "requireSlimeCount" : 1,
+                    "requireMoney" : 150
+                },
+                {
+                    "successRate" : 0.85,
+                    "failRate" : 0.15,
+                    "requireSlimeCount" : 3,
+                    "requireMoney" : 250
+                },
+                {
+                    "successRate" : 0.65,
+                    "failRate" : 0.35,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 400
+                },
+                {
+                    "successRate" : 0.45,
+                    "failRate" : 0.55,
+                    "requireSlimeCount" : 10,
+                    "requireMoney" : 600
+                }
+            ]
         },
         {
             "slimeType" : 3,
             "idleMoney" : 10,
-            "clickMoney" : 15
+            "clickMoney" : 15,
+            "slimePrice" : 750,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.95,
+                    "failRate" : 0.05,
+                    "requireSlimeCount" : 1,
+                    "requireMoney" : 200
+                },
+                {
+                    "successRate" : 0.80,
+                    "failRate" : 0.20,
+                    "requireSlimeCount" : 3,
+                    "requireMoney" : 400
+                },
+                {
+                    "successRate" : 0.65,
+                    "failRate" : 0.35,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 700
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 10,
+                    "requireMoney" : 1000
+                }
+            ]
         },
         {
             "slimeType" : 4,
             "idleMoney" : 20,
-            "clickMoney" : 25
+            "clickMoney" : 25,
+            "slimePrice" : 1250,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.90,
+                    "failRate" : 0.10,
+                    "requireSlimeCount" : 2,
+                    "requireMoney" : 200
+                },
+                {
+                    "successRate" : 0.75,
+                    "failRate" : 0.25,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 450
+                },
+                {
+                    "successRate" : 0.60,
+                    "failRate" : 0.40,
+                    "requireSlimeCount" : 10,
+                    "requireMoney" : 900
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 15,
+                    "requireMoney" : 1300
+                }
+            ]
         },
         {
             "slimeType" : 5,
             "idleMoney" : 50,
-            "clickMoney" : 60
+            "clickMoney" : 60,
+            "slimePrice" : 2500,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.90,
+                    "failRate" : 0.10,
+                    "requireSlimeCount" : 2,
+                    "requireMoney" : 300
+                },
+                {
+                    "successRate" : 0.75,
+                    "failRate" : 0.30,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 600
+                },
+                {
+                    "successRate" : 0.60,
+                    "failRate" : 0.40,
+                    "requireSlimeCount" : 15,
+                    "requireMoney" : 1500
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 20,
+                    "requireMoney" : 2500
+                }
+            ]
         },
         {
             "slimeType" : 6,
             "idleMoney" : 100,
-            "clickMoney" : 130
+            "clickMoney" : 130,
+            "slimePrice" : 5800,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.85,
+                    "failRate" : 0.15,
+                    "requireSlimeCount" : 3,
+                    "requireMoney" : 450
+                },
+                {
+                    "successRate" : 0.70,
+                    "failRate" : 0.30,
+                    "requireSlimeCount" : 8,
+                    "requireMoney" : 900
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 18,
+                    "requireMoney" : 1800
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 25,
+                    "requireMoney" : 3000
+                }
+            ]
         },
         {
             "slimeType" : 7,
             "idleMoney" : 200,
-            "clickMoney" : 240
+            "clickMoney" : 240,
+            "slimePrice" : 12000,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.80,
+                    "failRate" : 0.20,
+                    "requireSlimeCount" : 3,
+                    "requireMoney" : 800
+                },
+                {
+                    "successRate" : 0.60,
+                    "failRate" : 0.40,
+                    "requireSlimeCount" : 12,
+                    "requireMoney" : 1500
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 18,
+                    "requireMoney" : 3000
+                },
+                {
+                    "successRate" : 0.25,
+                    "failRate" : 0.75,
+                    "requireSlimeCount" : 25,
+                    "requireMoney" : 5000
+                }
+            ]
         },
         {
             "slimeType" : 8,
             "idleMoney" : 400,
-            "clickMoney" : 480
+            "clickMoney" : 480,
+            "slimePrice" : 31000,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.75,
+                    "failRate" : 0.25,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 1000
+                },
+                {
+                    "successRate" : 0.55,
+                    "failRate" : 0.45,
+                    "requireSlimeCount" : 15,
+                    "requireMoney" : 2500
+                },
+                {
+                    "successRate" : 0.40,
+                    "failRate" : 0.60,
+                    "requireSlimeCount" : 25,
+                    "requireMoney" : 6000
+                },
+                {
+                    "successRate" : 0.25,
+                    "failRate" : 0.75,
+                    "requireSlimeCount" : 35,
+                    "requireMoney" : 9000
+                }
+            ]
         },
         {
             "slimeType" : 9,
             "idleMoney" : 700,
-            "clickMoney" : 800
+            "clickMoney" : 800,
+            "slimePrice" : 75000,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.70,
+                    "failRate" : 0.30,
+                    "requireSlimeCount" : 5,
+                    "requireMoney" : 1500
+                },
+                {
+                    "successRate" : 0.50,
+                    "failRate" : 0.50,
+                    "requireSlimeCount" : 15,
+                    "requireMoney" : 4000
+                },
+                {
+                    "successRate" : 0.30,
+                    "failRate" : 0.70,
+                    "requireSlimeCount" : 25,
+                    "requireMoney" : 10000
+                },
+                {
+                    "successRate" : 0.15,
+                    "failRate" : 0.85,
+                    "requireSlimeCount" : 35,
+                    "requireMoney" : 20000
+                }
+            ]
         },
         {
             "slimeType" : 10,
             "idleMoney" : 1000,
-            "clickMoney" : 1150
+            "clickMoney" : 1150,
+            "slimePrice" : 112500,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.65,
+                    "failRate" : 0.35,
+                    "requireSlimeCount" : 8,
+                    "requireMoney" : 2500
+                },
+                {
+                    "successRate" : 0.45,
+                    "failRate" : 0.55,
+                    "requireSlimeCount" : 20,
+                    "requireMoney" : 8000
+                },
+                {
+                    "successRate" : 0.25,
+                    "failRate" : 0.75,
+                    "requireSlimeCount" : 35,
+                    "requireMoney" : 20000
+                },
+                {
+                    "successRate" : 0.15,
+                    "failRate" : 0.85,
+                    "requireSlimeCount" : 50,
+                    "requireMoney" : 45000
+                }
+            ]
         },
         {
             "slimeType" : 11,
             "idleMoney" : 1500,
-            "clickMoney" : 1800
+            "clickMoney" : 1800,
+            "slimePrice" : 189000,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.50,
+                    "failRate" : 0.50,
+                    "requireSlimeCount" : 10,
+                    "requireMoney" : 5000
+                },
+                {
+                    "successRate" : 0.35,
+                    "failRate" : 0.65,
+                    "requireSlimeCount" : 25,
+                    "requireMoney" : 20000
+                },
+                {
+                    "successRate" : 0.15,
+                    "failRate" : 0.85,
+                    "requireSlimeCount" : 40,
+                    "requireMoney" : 50000
+                },
+                {
+                    "successRate" : 0.05,
+                    "failRate" : 0.95,
+                    "requireSlimeCount" : 50,
+                    "requireMoney" : 85000
+                }
+            ]
         },
         {
             "slimeType" : 12,
             "idleMoney" : 2500,
-            "clickMoney" : 3500
+            "clickMoney" : 3500,
+            "slimePrice" : 420000,
+            "slimeEnhanceDatas" : [
+                {
+                    "successRate" : 0.45,
+                    "failRate" : 0.55,
+                    "requireSlimeCount" : 10,
+                    "requireMoney" : 10000
+                },
+                {
+                    "successRate" : 0.35,
+                    "failRate" : 0.65,
+                    "requireSlimeCount" : 25,
+                    "requireMoney" : 50000
+                },
+                {
+                    "successRate" : 0.10,
+                    "failRate" : 0.90,
+                    "requireSlimeCount" : 40,
+                    "requireMoney" : 80000
+                },
+                {
+                    "successRate" : 0.01,
+                    "failRate" : 0.99,
+                    "requireSlimeCount" : 50,
+                    "requireMoney" : 150000
+                }
+            ]
         }
     ],
     "skillDatas" : [
         {
             "skillType" : 0,
-            "maxSkillLevel" : 4,
+            "maxSkillLevel" : 12,
             "skillName" : "슬라임 슬롯 증가",
-            "skillLore" : "스킬 레벨당 슬롯 수 5 / 10 / 20 / 40 증가",
+            "skillLore" : "슬라임 해금 레벨 상승",
             "costPerLevel" : [
+                25,
                 100,
-                500,
-                3000,
-                10000
+                350,
+                600,
+                1500,
+                2500,
+                6000,
+                15000,
+                35000,
+                55000,
+                90000,
+                150000
             ],
             "statPerLevel" : [
-                1.05,
-                1.10,
-                1.20,
-                1.40
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
             ]
         },
         {
@@ -97,6 +446,7 @@
                 25000
             ],
             "statPerLevel" : [
+                1.00,
                 1.05,
                 1.10,
                 1.15,
@@ -115,6 +465,7 @@
                 45000
             ],
             "statPerLevel" : [
+                1.00,
                 1.03,
                 1.05,
                 1.10,
@@ -127,16 +478,17 @@
             "skillName" : "슬라임 강화 성공 확률 증가",
             "skillLore" : "스킬 레벨 당 성공 확률 n% 증가",
             "costPerLevel" : [
-                111111,
-                222222,
-                333333,
-                444444
+                3000,
+                25000,
+                80000,
+                150000
             ],
             "statPerLevel" : [
-                1.05,
-                1.10,
-                1.20,
-                1.40
+                0.00,
+                0.03,
+                0.05,
+                0.10,
+                0.15
             ]
         }
     ]
