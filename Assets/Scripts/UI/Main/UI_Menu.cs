@@ -37,58 +37,32 @@ public class UI_Menu : UI_Base
     };
     private UIManager uIManager => Managers.UI;
     private Vector2 _offset = new Vector2(-50.0f, -50.0f);
-    private RectTransform _rootRect;
     private GameObject _buttonNamePanel;
     private TextMeshProUGUI _buttonNameText;
 
     private void OnShopButtonClicked(PointerEventData data)
     {
-        if(uIManager.OpenedMenuUI != null)
-        {
-            return;
-        }
-
-        uIManager.OpenedMenuUI = uIManager.ShowUI<UI_Setting>();
+        uIManager.ShowMenuUI<UI_Shop>();
     }
 
     private void OnUpgradeButtonClicked(PointerEventData data)
     {
-        if(uIManager.OpenedMenuUI != null)
-        {
-            return;
-        }
-
-        uIManager.OpenedMenuUI = uIManager.ShowUI<UI_Upgrade>();
+        uIManager.ShowMenuUI<UI_Upgrade>();
     }
 
     private void OnManagementButtonClicked(PointerEventData data)
     {
-        if(uIManager.OpenedMenuUI != null)
-        {
-            return;
-        }
-
-        uIManager.OpenedMenuUI = uIManager.ShowUI<UI_Setting>();
+        uIManager.ShowMenuUI<UI_Management>();
     }
 
     private void OnAchievementButtonClicked(PointerEventData data)
     {
-        if(uIManager.OpenedMenuUI != null)
-        {
-            return;
-        }
-
-        uIManager.OpenedMenuUI = uIManager.ShowUI<UI_Setting>();
+        uIManager.ShowMenuUI<UI_Setting>();
     }
 
     private void OnSettingButtonClicked(PointerEventData data)
     {
-        if(uIManager.OpenedMenuUI != null)
-        {
-            return;
-        }
-
-        uIManager.OpenedMenuUI = uIManager.ShowUI<UI_Setting>();
+        uIManager.ShowMenuUI<UI_Setting>();
     }
 
     private void OnButtonEnter(PointerEventData data)
@@ -147,8 +121,6 @@ public class UI_Menu : UI_Base
     {
         _buttonNamePanel = GetObject((int)GameObjects.ButtonNamePanel);
         _buttonNameText = GetText((int)Texts.ButtonName);
-
-        _rootRect = Managers.UI.Root.GetComponent<RectTransform>();
         _buttonNamePanel.SetActive(false);
     }
 
