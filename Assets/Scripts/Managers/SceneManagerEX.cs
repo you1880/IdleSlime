@@ -15,6 +15,8 @@ public class SceneManagerEX
     private Image _blockImage;
     private UI_Blocker _blockerUI;
 
+    public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
+
     public void LoadNextScene(Define.SceneType sceneType = Define.SceneType.Main)
     {
         string sceneName = GetSceneName(sceneType);
