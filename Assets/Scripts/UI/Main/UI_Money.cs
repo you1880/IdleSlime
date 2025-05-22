@@ -14,7 +14,7 @@ public class UI_Money : UI_Base
 
     private void SetMoneyText()
     {
-        _moneyText.text = $"{Managers.Data.CurrentSaveData.money:N0}";
+        _moneyText.text = $"{Managers.Data.UserDataManager.CurrentSaveData.money:N0}";
     }
 
     private void BindUIElements()
@@ -27,10 +27,26 @@ public class UI_Money : UI_Base
         _moneyText = GetText((int)Texts.MoneyText);
     }
 
+    private void OnDataChanged()
+    {
+        SetMoneyText();
+    }
+
     public override void Init()
     {
         BindUIElements();
         GetUIElements();
         SetMoneyText();
+    }
+
+    private void OnEnable()
+    {
+        Managers.Data.UserDataManager.OnUserDataChanged -= OnDataChanged;
+        Managers.Data.UserDataManager.OnUserDataChanged += OnDataChanged;
+    }
+
+    private void OnDisable()
+    {
+        Managers.Data.UserDataManager.OnUserDataChanged -= OnDataChanged;
     }
 }
