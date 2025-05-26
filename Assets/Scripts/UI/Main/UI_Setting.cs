@@ -107,6 +107,8 @@ public class UI_Setting : UI_Base
         bool isFullScreen = Screen.fullScreen;
 
         Screen.SetResolution(res.width, res.height, isFullScreen);
+
+        Managers.Game.OnResolutionChanged?.Invoke();
     }
 
     private void InitDropdown()

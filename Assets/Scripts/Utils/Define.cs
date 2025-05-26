@@ -76,10 +76,10 @@ public class Define
 
     public enum GradeType
     {
-        GradeC,
-        GradeB,
-        GradeA,
-        GradeS,
-        GradeSP
+        GradeC = 1,
+        GradeB = 2,
+        GradeA = 3,
+        GradeS = 4,
+        GradeSP = 5
     }
 }

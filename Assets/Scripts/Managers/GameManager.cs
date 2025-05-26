@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class GameManager
 {
+    private const float BASE_X = 1280.0f;
+    private const float BASE_Y = 720.0f;
     private const float MIN_X = -7.0f;
     private const float MAX_X = 7.0f;
     private const float MIN_Y = -2.5f;
@@ -15,15 +17,18 @@ public class GameManager
     private const float IDLE_DELAY_TIME = 5.0f;
     private const string INSUFFICIENT_MONEY_MESSAGE = "돈이 부족합니다.";
     private List<float> _clickMultipliersByEnhanceLevel = new List<float> { 1.0f, 1.2f, 1.5f, 2.0f, 3.5f };
-    private IReadOnlyList<float> _moveRanges = new List<float> { MIN_X, MAX_X, MIN_Y, MAX_Y };
     private GameDataManager gameDataManager => Managers.Data.GameDataManager;
     private UserDataManager userDataManager => Managers.Data.UserDataManager;
     private SaveData userData => userDataManager.CurrentSaveData;
     private Coroutine _idleIncomeCoroutine;
+    public Action OnResolutionChanged;
 
-    public IReadOnlyList<float> GetMoveRanges()
+    public List<float> GetMoveRanges()
     {
-        return _moveRanges;
+        float width = Screen.width / BASE_X;
+        float height = Screen.height / BASE_Y;
+
+        return new List<float> { MIN_X * width, MAX_X * width, MIN_Y * height, MAX_Y * height };
     }
 
     public OwnedSlime GetOwnedSlimeInUserData(int slimeType)

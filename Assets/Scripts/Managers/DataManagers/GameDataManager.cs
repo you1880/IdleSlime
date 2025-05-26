@@ -11,6 +11,7 @@ public class GameDataManager
     private const int UPGRADE_CLICK_MONEY_ID = 1;
     private Dictionary<int, SlimeData> _slimeDataDict = new Dictionary<int, SlimeData>();
     private Dictionary<int, SkillData> _skillDataDict = new Dictionary<int, SkillData>();
+    private Dictionary<int, AchievementData> _achievementDataDict = new Dictionary<int, AchievementData>();
     private GameData _gameData;
     private string _gameDataPath;
     
@@ -98,6 +99,16 @@ public class GameDataManager
         return 1.0f;
     }
 
+    public AchievementData GetAchievementData(int id)
+    {
+        if (_achievementDataDict.TryGetValue(id, out AchievementData data))
+        {
+            return data;
+        }
+
+        return new AchievementData(0, "");
+    }
+
     private void LoadGameData()
     {
         try
@@ -115,6 +126,11 @@ public class GameDataManager
                 foreach (SkillData skillData in _gameData.skillDatas)
                 {
                     _skillDataDict.Add(skillData.skillType, skillData);
+                }
+
+                foreach (AchievementData achievementData in _gameData.achievementDatas)
+                {
+                    _achievementDataDict.Add(achievementData.achievementId, achievementData);
                 }
             }
         }

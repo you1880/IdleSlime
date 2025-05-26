@@ -66,11 +66,13 @@ namespace Data.Game
     {
         public List<SlimeData> slimeDatas;
         public List<SkillData> skillDatas;
+        public List<AchievementData> achievementDatas;
 
         public GameData()
         {
             slimeDatas = new List<SlimeData>();
             skillDatas = new List<SkillData>();
+            achievementDatas = new List<AchievementData>();
         }
     }
 
@@ -126,6 +128,21 @@ namespace Data.Game
             failRate = fRate;
             requireSlimeCount = count;
             requireMoney = money;
+        }
+    }
+
+    [System.Serializable]
+    public class AchievementData
+    {
+        public int achievementId;
+        public string achievementName;
+        public List<int> achievementRequires;
+
+        public AchievementData(int id, string name)
+        {
+            achievementId = id;
+            achievementName = name;
+            achievementRequires = new List<int>();
         }
     }
 }

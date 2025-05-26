@@ -15,4 +15,9 @@ public static class Extension
     {
         return Util.GetOrAddComponent<T>(obj);
     }
+
+    public static T SafeGetListValue<T>(this List<T> list, int index, T defaultVal = default)
+    {
+        return (index >= 0 && index < list.Count) ? list[index] : defaultVal;
+    }
 }

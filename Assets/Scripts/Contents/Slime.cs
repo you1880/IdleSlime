@@ -133,6 +133,11 @@ public class Slime : MonoBehaviour
         SetIdleState();
     }
 
+    private void UpdateSlimeMoveRanges()
+    {
+        _canMoveRanges = Managers.Game.GetMoveRanges();
+    }
+
     private void Start()
     {
         InitSlime();
@@ -151,5 +156,16 @@ public class Slime : MonoBehaviour
             case Define.SlimeState.Touch:
                 break;
         }
+    }
+
+    private void OnEnable()
+    {
+        Managers.Game.OnResolutionChanged -= UpdateSlimeMoveRanges;
+        Managers.Game.OnResolutionChanged += UpdateSlimeMoveRanges;
+    }
+
+    private void OnDisable()
+    {
+        Managers.Game.OnResolutionChanged -= UpdateSlimeMoveRanges;
     }
 }

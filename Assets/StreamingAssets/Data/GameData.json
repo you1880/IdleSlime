@@ -491,5 +491,51 @@
                 0.15
             ]
         }
+    ],
+    "achievementDatas" : [
+        {
+            "achievementId" : 0,
+            "achievementName" : "총 골드 획득량",
+            "achievementRequires" : [
+                1000,
+                7500,
+                25000,
+                50000,
+                100000
+            ]
+        },
+        {
+            "achievementId" : 1,
+            "achievementName" : "누적 소모 골드",
+            "achievementRequires" : [
+                1000,
+                7500,
+                25000,
+                50000,
+                100000
+            ]
+        },
+        {
+            "achievementId" : 2,
+            "achievementName" : "총 플레이 시간(분)",
+            "achievementRequires" : [
+                5,
+                30,
+                120,
+                360,
+                1440
+            ]
+        },
+        {
+            "achievementId" : 3,
+            "achievementName" : "현재 슬라임 단계",
+            "achievementRequires" : [
+                2,
+                5,
+                8,
+                10,
+                12
+            ]
+        }
     ]
 }
