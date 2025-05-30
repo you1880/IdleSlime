@@ -46,9 +46,7 @@ public class UI_Lobby : UI_Base
 
     private void OnQuitButtonClicked(PointerEventData data)
     {
-        //TODO
-        //Application 종료
-        Debug.Log("Quit Button");
+        Application.Quit();
     }
 
     private void OnButtonEnter(PointerEventData data)

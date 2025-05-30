@@ -57,7 +57,7 @@ public class UI_Menu : UI_Base
 
     private void OnAchievementButtonClicked(PointerEventData data)
     {
-        uIManager.ShowMenuUI<UI_Setting>();
+        uIManager.ShowMenuUI<UI_Achievement>();
     }
 
     private void OnSettingButtonClicked(PointerEventData data)

@@ -19,14 +19,34 @@ public class InputManager
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D collider = Physics2D.OverlapPoint(new Vector2(pos.x, pos.y));
+            Collider2D[] colliders = Physics2D.OverlapPointAll(new Vector2(pos.x, pos.y));
 
-            if (collider == null)
+            if (colliders == null)
             {
                 return;
             }
 
-            Slime slime = collider.GetComponent<Slime>();
+            Slime slime = null;
+            int slimeType = 0;
+            
+            if (colliders.Length == 1)
+            {
+                slime = colliders[0].GetComponent<Slime>();
+            }
+            else
+            {
+                foreach (Collider2D col in colliders)
+                {
+                    
+                    Slime stmp = col.GetComponent<Slime>();
+                    Debug.Log($"COL : {stmp.SlimeType}");
+                    if (slimeType < stmp.SlimeType)
+                    {
+                        slime = stmp;
+                        slimeType = stmp.SlimeType;
+                    }
+                }
+            }
 
             if (slime != null)
             {

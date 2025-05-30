@@ -17,7 +17,7 @@ public class UserDataManager
     private const int MAX_SAVE_SLOTS = 5;
     private JsonSerializerSettings _settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
     private List<SaveData> saveDatas = new List<SaveData>();
-    private float _currentSavePlayTime = 0.0f;
+    public float CurrentSavePlayTime { get; private set; } = 0.0f;
     public SaveData CurrentSaveData { get; private set; }
     public Action OnUserDataChanged;
 
@@ -109,18 +109,18 @@ public class UserDataManager
 
     public void CalCurrentSavePlayTime()
     {
-        _currentSavePlayTime += Time.deltaTime;
+        CurrentSavePlayTime += Time.deltaTime;
     }
 
     public void InitCurrentSavePlayTime()
     {
-        _currentSavePlayTime = 0.0f;
+        CurrentSavePlayTime = 0.0f;
     }
 
     public (int, int) GetTotalPlayTime()
     {
-        int hours = Mathf.FloorToInt((CurrentSaveData.playTime + _currentSavePlayTime) / 3600.0f);
-        int minutes = Mathf.FloorToInt((CurrentSaveData.playTime + _currentSavePlayTime) % 3600.0f / 60.0f);
+        int hours = Mathf.FloorToInt((CurrentSaveData.playTime + CurrentSavePlayTime) / 3600.0f);
+        int minutes = Mathf.FloorToInt((CurrentSaveData.playTime + CurrentSavePlayTime) % 3600.0f / 60.0f);
 
         return (hours, minutes);
     }
@@ -172,7 +172,7 @@ public class UserDataManager
             }
 
             saveData.saveTime = Util.GetCurrentDataTime();
-            saveData.playTime += _currentSavePlayTime;
+            saveData.playTime += CurrentSavePlayTime;
             string json = JsonConvert.SerializeObject(saveData, Formatting.Indented, _settings);
             string path = GetSavePath(saveNum);
 

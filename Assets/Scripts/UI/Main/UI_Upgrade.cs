@@ -67,7 +67,7 @@ public class UI_Upgrade : UI_Base
     private GameDataManager gameDataManager => Managers.Data.GameDataManager;
     private UserDataManager userDataManager => Managers.Data.UserDataManager;
     private SaveData userData => Managers.Data.UserDataManager.CurrentSaveData;
-    private Vector2 _offset = new Vector2(175.0f, -175.0f);
+    private Vector2 _offset = new Vector2(100.0f, -100.0f);
     private List<UpgradeSlot> _upgradeSlots = new List<UpgradeSlot>();
     private GameObject _skillLorePanel;
     private TextMeshProUGUI _nameText;

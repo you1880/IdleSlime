@@ -58,7 +58,8 @@ public class UI_Achievement : UI_Base
     private (int, int) GetTrophyGrade(int id)
     {
         Data.Save.SaveData saveData = Managers.Data.UserDataManager.CurrentSaveData;
-        List<int> requireValues = Managers.Data.GameDataManager.GetAchievementData(id).achievementRequires;
+        AchievementData achievementData = Managers.Data.GameDataManager.GetAchievementData(id);
+        List<int> requireValues = achievementData.achievementRequires;
         int grade = 0;
         int checkValue = 0;
 
@@ -71,8 +72,8 @@ public class UI_Achievement : UI_Base
                 checkValue = saveData.totalExpenses;
                 break;
             case 2:
-                checkValue = (int)saveData.playTime;
-                break;
+                checkValue = (int)((saveData.playTime + Managers.Data.UserDataManager.CurrentSavePlayTime) / 60.0f);
+                break; 
             case 3:
                 checkValue = Managers.Data.GameDataManager.GetMaxUnlockedSlimeType();
                 break;
@@ -112,7 +113,7 @@ public class UI_Achievement : UI_Base
         }
         else
         {
-            slot.statusText.text = $"{curValue} / {data.achievementRequires.SafeGetListValue(grade, 0)}";
+            slot.statusText.text = $"{curValue:N0} / {data.achievementRequires.SafeGetListValue(grade, 0):N0}";
         }
 
         if (grade < (int)Define.GradeType.GradeC)

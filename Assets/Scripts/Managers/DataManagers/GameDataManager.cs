@@ -5,15 +5,16 @@ using System.IO;
 using Data.Game;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class GameDataManager
 {
-    private const int UNLOCK_SKILL_ID = 0;
-    private const int UPGRADE_CLICK_MONEY_ID = 1;
+    private GameDataSO _gameDataSO;
     private Dictionary<int, SlimeData> _slimeDataDict = new Dictionary<int, SlimeData>();
     private Dictionary<int, SkillData> _skillDataDict = new Dictionary<int, SkillData>();
     private Dictionary<int, AchievementData> _achievementDataDict = new Dictionary<int, AchievementData>();
-    private GameData _gameData;
-    private string _gameDataPath;
     
     public SlimeData GetSlimeDataWithTypeId(int slimeType)
     {
@@ -37,11 +38,6 @@ public class GameDataManager
         return new SkillData(-1, 0);
     }
 
-    public SkillData GetSkillDataWithId(Define.SkillType skillType)
-    {
-        return GetSkillDataWithId((int)skillType);
-    }
-
     public int GetSkillUpgradeCost(int id, int level)
     {
         if (!_skillDataDict.TryGetValue(id, out SkillData data))
@@ -49,39 +45,19 @@ public class GameDataManager
             return 0;
         }
 
-        if (!(level >= 0 && level < data.costPerLevel.Count))
-        {
-            return 0;
-        }
-
-        return data.costPerLevel[level];
+        return data.costPerLevel.SafeGetListValue(level);
     }
 
     public int GetMaxUnlockedSlimeType()
     {
-        int currentLevel = Managers.Data.UserDataManager.GetSkillLevel(UNLOCK_SKILL_ID);
+        int currentLevel = Managers.Data.UserDataManager.GetSkillLevel(Define.SkillType.UnlockSlimeType);
 
-        if (_skillDataDict.TryGetValue(UNLOCK_SKILL_ID, out SkillData data))
+        if (!_skillDataDict.TryGetValue((int)Define.SkillType.UnlockSlimeType, out SkillData data))
         {
-            return (int)data.statPerLevel[currentLevel];
+            return 0; 
         }
 
-        return 0;
-    }
-
-    public float GetUpgradeClickWeight(int level)
-    {
-        if (!_skillDataDict.TryGetValue(UPGRADE_CLICK_MONEY_ID, out SkillData data))
-        {
-            return 1.0f;
-        }
-
-        if (level >= 0 && level < data.statPerLevel.Count)
-        {
-            return data.statPerLevel[level];
-        }
-
-        return 1.0f;
+        return (int)data.statPerLevel.SafeGetListValue(currentLevel);
     }
 
     public float GetLevelPerSkillWeight(Define.SkillType skillType, int level)
@@ -91,18 +67,18 @@ public class GameDataManager
             return 1.0f;
         }
 
-        if (level >= 0 && level < data.statPerLevel.Count)
-        {
-            return data.statPerLevel[level];
-        }
-
-        return 1.0f;
+        return data.statPerLevel.SafeGetListValue(level, 1.0f);
     }
 
     public AchievementData GetAchievementData(int id)
     {
         if (_achievementDataDict.TryGetValue(id, out AchievementData data))
         {
+            //
+            if (id == 2)
+            {
+                data.achievementRequires.ForEach(e => e = e / 60);
+            }
             return data;
         }
 
@@ -113,25 +89,47 @@ public class GameDataManager
     {
         try
         {
-            if (File.Exists(_gameDataPath))
+            foreach (SlimeData slimeData in _gameDataSO.slimeDatas)
             {
-                string json = File.ReadAllText(_gameDataPath);
-                _gameData = JsonUtility.FromJson<GameData>(json);
+                _slimeDataDict.Add(slimeData.slimeType, slimeData);
+            }
 
-                foreach (SlimeData slimeData in _gameData.slimeDatas)
-                {
-                    _slimeDataDict.Add(slimeData.slimeType, slimeData);
-                }
+            foreach (SkillData skillData in _gameDataSO.skillDatas)
+            {
+                _skillDataDict.Add(skillData.skillType, skillData);
+            }
 
-                foreach (SkillData skillData in _gameData.skillDatas)
-                {
-                    _skillDataDict.Add(skillData.skillType, skillData);
-                }
+            foreach (AchievementData achievementData in _gameDataSO.achievementDatas)
+            {
+                _achievementDataDict.Add(achievementData.achievementId, achievementData);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.ToString());
+        }
+    }
 
-                foreach (AchievementData achievementData in _gameData.achievementDatas)
-                {
-                    _achievementDataDict.Add(achievementData.achievementId, achievementData);
-                }
+    /// <summary>
+    /// GameData.json 준비
+    /// StreamingAssets -> Data -> GameData.json 이 되도록 경로를 만들고 함수를 한번 실행
+    /// </summary>
+    private void ConvertJsonToSO()
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "Data/GameData.json");
+        try
+        {
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                GameDataSO dataSO = ScriptableObject.CreateInstance<GameDataSO>();
+                JsonUtility.FromJsonOverwrite(json, dataSO);
+
+                string savePath = "Assets/GameDataSO.asset";
+#if UNITY_EDITOR
+                AssetDatabase.CreateAsset(dataSO, savePath);
+                AssetDatabase.SaveAssets();
+#endif
             }
         }
         catch (Exception e)
@@ -142,10 +140,8 @@ public class GameDataManager
 
     public void Init()
     {
-        _gameDataPath = Path.Combine(Application.streamingAssetsPath, "Data/GameData.json");
+        _gameDataSO = Managers.Resource.Load<GameDataSO>("GameDataSO");
 
         LoadGameData();
-
-        Debug.Log(_slimeDataDict[1].slimeEnhanceDatas[1].successRate);
     }
 }

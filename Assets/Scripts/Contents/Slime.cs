@@ -12,10 +12,11 @@ public class Slime : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Define.SlimeState _slimeState = Define.SlimeState.Idle;
-    private IReadOnlyList<float> _canMoveRanges;
+    private IReadOnlyList<float> _canMoveRanges => Managers.Game.GetMoveRanges();
     private Vector2 _destPos;
     private int _slimeType;
     private float _moveDelayTime;
+    public int SlimeType { get { return _slimeType; } }
 
     public Define.SlimeState SlimeState
     {
@@ -128,14 +129,8 @@ public class Slime : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _spriteRenderer.sprite = Managers.Resource.LoadSlimeSprite(_slimeType);
-        _canMoveRanges = Managers.Game.GetMoveRanges();
 
         SetIdleState();
-    }
-
-    private void UpdateSlimeMoveRanges()
-    {
-        _canMoveRanges = Managers.Game.GetMoveRanges();
     }
 
     private void Start()
@@ -156,16 +151,5 @@ public class Slime : MonoBehaviour
             case Define.SlimeState.Touch:
                 break;
         }
-    }
-
-    private void OnEnable()
-    {
-        Managers.Game.OnResolutionChanged -= UpdateSlimeMoveRanges;
-        Managers.Game.OnResolutionChanged += UpdateSlimeMoveRanges;
-    }
-
-    private void OnDisable()
-    {
-        Managers.Game.OnResolutionChanged -= UpdateSlimeMoveRanges;
     }
 }

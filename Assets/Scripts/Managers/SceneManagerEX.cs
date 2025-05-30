@@ -42,7 +42,7 @@ public class SceneManagerEX
 
         float startTime = Time.time;
 
-        yield return Managers.RunCoroutine(Fade(ALPHA_TRANSPARENT, ALPHA_OPAQUE));
+        yield return Managers.RunCoroutine(FadeOut());
         SetBlockText("로딩중...");
 
         while(operation.progress < 0.9f)
@@ -116,9 +116,9 @@ public class SceneManagerEX
         _blockImage = null;
     }
 
-    private void FadeOut()
+    private IEnumerator FadeOut()
     {
-        Managers.RunCoroutine(Fade(ALPHA_TRANSPARENT, ALPHA_OPAQUE));
+        yield return Managers.RunCoroutine(Fade(ALPHA_TRANSPARENT, ALPHA_OPAQUE));
     }
 
     private string GetSceneName(Define.SceneType type)

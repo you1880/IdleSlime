@@ -13,6 +13,7 @@ public class UI_Management : UI_Base
     {
         SlimeManagement,
         Lock,
+        ButtonLock,
         UserManagement
     }
 
@@ -59,6 +60,7 @@ public class UI_Management : UI_Base
     #region SlimePanel
     private GameObject _slimeManagePanel;
     private GameObject _lockObject;
+    private GameObject _buttonLockObject;
     private Image _slimeImage;
     private Image _slimeGradeImage;
     private TextMeshProUGUI _slimeCountText;
@@ -151,12 +153,26 @@ public class UI_Management : UI_Base
 
     private void SetEnhancePanel(int slimeEnhancementLevel)
     {
-        SlimeEnhanceData slimeEnhanceData = Managers.Game.GetEnhanceData(_currentSlimeType, slimeEnhancementLevel);
+        if (slimeEnhancementLevel >= (int)Define.GradeType.GradeS)
+        {
+            _buttonLockObject.SetActive(true);
 
-        _successChanceText.text = $"성공 확률 : {Managers.Game.GetFinalEnhanceChance(slimeEnhanceData.successRate)}";
-        _failChanceText.text = $"실패(하락) 확률 : {slimeEnhanceData.failRate}";
-        _requireCountText.text = $"필요한 슬라임 수 : {slimeEnhanceData.requireSlimeCount}";
-        _requireMoneyText.text = $"필요한 골드 : {slimeEnhanceData.requireMoney:N0}";
+            _successChanceText.text = $"성공 확률 : -%";
+            _failChanceText.text = $"실패(하락) 확률 : -%";
+            _requireCountText.text = $"필요한 슬라임 수 : -";
+            _requireMoneyText.text = $"필요한 골드 : -";
+        }
+        else
+        {
+            _buttonLockObject.SetActive(false);
+
+            SlimeEnhanceData slimeEnhanceData = Managers.Game.GetEnhanceData(_currentSlimeType, slimeEnhancementLevel);
+
+            _successChanceText.text = $"성공 확률 : {Managers.Game.GetFinalEnhanceChance(slimeEnhanceData.successRate)}";
+            _failChanceText.text = $"실패(하락) 확률 : {slimeEnhanceData.failRate}";
+            _requireCountText.text = $"필요한 슬라임 수 : {slimeEnhanceData.requireSlimeCount}";
+            _requireMoneyText.text = $"필요한 골드 : {slimeEnhanceData.requireMoney:N0}";
+        }
     }
 
     private void InitSlimePanel()
@@ -273,6 +289,7 @@ public class UI_Management : UI_Base
     private void GetSlimePanelUIElements()
     {
         _lockObject = GetObject((int)GameObjects.Lock);
+        _buttonLockObject = GetObject((int)GameObjects.ButtonLock);
         _slimeImage = GetImage((int)Images.SlimeImage);
         _slimeGradeImage = GetImage((int)Images.GradeImage);
         _slimeCountText = GetText((int)Texts.SlimeCount);

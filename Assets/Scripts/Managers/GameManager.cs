@@ -21,7 +21,6 @@ public class GameManager
     private UserDataManager userDataManager => Managers.Data.UserDataManager;
     private SaveData userData => userDataManager.CurrentSaveData;
     private Coroutine _idleIncomeCoroutine;
-    public Action OnResolutionChanged;
 
     public List<float> GetMoveRanges()
     {
@@ -60,9 +59,8 @@ public class GameManager
         }
 
         int skillLevel = userDataManager.GetSkillLevel(Define.SkillType.UpgradeClickMoney);
-        float skillWeight = gameDataManager.GetUpgradeClickWeight(skillLevel);
-        float enhanceWeight = (ownedSlime.slimeEnhancementLevel < 0 || ownedSlime.slimeEnhancementLevel >= _clickMultipliersByEnhanceLevel.Count) ?
-            1.0f : _clickMultipliersByEnhanceLevel[ownedSlime.slimeEnhancementLevel];
+        float skillWeight = gameDataManager.GetLevelPerSkillWeight(Define.SkillType.UpgradeClickMoney, skillLevel);
+        float enhanceWeight = _clickMultipliersByEnhanceLevel.SafeGetListValue(ownedSlime.slimeEnhancementLevel, 1.0f);
 
         totalAmount = Mathf.RoundToInt(totalAmount * skillWeight * enhanceWeight);
 
@@ -108,9 +106,13 @@ public class GameManager
         }
 
         SlimeEnhanceData slimeEnhanceData = GetEnhanceData(slimeType, ownedSlime.slimeEnhancementLevel);
-        if (ownedSlime.slimeEnhancementLevel >= (int)Define.GradeType.GradeSP)
+
+        if (ownedSlime.slimeEnhancementLevel >= (int)Define.GradeType.GradeS)
         {
             //최고 레벨
+            string msg = "최고 레벨입니다.";
+            ShowResult(msg, Define.EffectSoundType.Fail);
+            
             return;
         }
 
@@ -191,9 +193,7 @@ public class GameManager
 
     public void CollectIdleIncome()
     {
-        int income = GetTotalIdleIncome();
-
-        _idleIncomeCoroutine = Managers.RunCoroutine(IdleIncomeRoutine(income));
+        _idleIncomeCoroutine = Managers.RunCoroutine(IdleIncomeRoutine());
     }
 
     public void StopIdleIncomeRoutine()
@@ -216,14 +216,21 @@ public class GameManager
             totalIncome += (idleMoney * slimeCount);
         }
 
+        int skillLevel = userDataManager.GetSkillLevel(Define.SkillType.UpgradeIdleMoney);
+        float skillWeight = gameDataManager.GetLevelPerSkillWeight(Define.SkillType.UpgradeIdleMoney, skillLevel);
+
+        totalIncome = (int)(totalIncome * skillWeight);
+
         return totalIncome;
     }
 
-    private IEnumerator IdleIncomeRoutine(int income)
+    private IEnumerator IdleIncomeRoutine()
     {
         while (true)
         {
             yield return new WaitForSeconds(IDLE_DELAY_TIME);
+
+            int income = GetTotalIdleIncome();
 
             userDataManager.AddMoney(income);
         }
