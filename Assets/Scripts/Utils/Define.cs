@@ -82,4 +82,9 @@ public class Define
         GradeS = 4,
         GradeSP = 5
     }
+
+    public enum AchievementType
+    {
+        
+    }
 }
