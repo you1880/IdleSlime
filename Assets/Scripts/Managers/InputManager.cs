@@ -39,7 +39,7 @@ public class InputManager
                 {
                     
                     Slime stmp = col.GetComponent<Slime>();
-                    Debug.Log($"COL : {stmp.SlimeType}");
+
                     if (slimeType < stmp.SlimeType)
                     {
                         slime = stmp;

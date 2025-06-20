@@ -87,7 +87,6 @@ public class UserDataManager
             CurrentSaveData.ownedSlimes.Add(new OwnedSlime(slimeType, 1));
         }
 
-        Debug.Log("AddSlime");
         OnUserDataChanged?.Invoke();
     }
 

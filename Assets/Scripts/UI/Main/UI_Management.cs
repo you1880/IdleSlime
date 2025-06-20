@@ -253,11 +253,11 @@ public class UI_Management : UI_Base
 
         (int, int) playTime = userDataManager.GetTotalPlayTime();
 
-        _totalEarningsText.text = $"누적 획득 골드 : {userData.totalEarnings}";
-        _totalExpensesText.text = $"누적 사용 골드 : {userData.totalExpenses}";
-        _totalIdleMoneyText.text = $"5초 당 얻는 총 골드 : {Managers.Game.GetTotalIdleIncome()}";
+        _totalEarningsText.text = $"누적 획득 골드 : {userData.totalEarnings:N0}";
+        _totalExpensesText.text = $"누적 사용 골드 : {userData.totalExpenses:N0}";
+        _totalIdleMoneyText.text = $"5초 당 얻는 총 골드 : {Managers.Game.GetTotalIdleIncome():N0}";
         _totalPlayTimeText.text = $"총 플레이 시간 : {playTime.Item1}시간 {playTime.Item2}분";
-        _totalSlimeCountText.text = $"총 슬라임 갯수 : {count}";
+        _totalSlimeCountText.text = $"총 슬라임 갯수 : {count:N0}";
     }
 
     private void InitUserPanel()
