@@ -19,3 +19,7 @@
 - 출처 : [볼트 2D 젤리팜 에셋 팩](https://assetstore.unity.com/packages/2d/characters/bolt-2d-jellyfarm-assets-pack-188722)
 
 
+
+###### 강의용 Asset이나, 클릭커 게임이라는 컨셉과 에셋만 빌려오고 그외 콘텐츠는 직접 구성하였습니다.
+
+
